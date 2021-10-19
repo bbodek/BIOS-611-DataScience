@@ -15,7 +15,7 @@ You will need to download [docker](https://docs.docker.com/get-docker/) to run t
 
 First, fork this repo and clone to your local environment (see [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo) for detailed instructions).
 
-Next, build and run your docker environment (note that you must replcae <yourpassword> with a password you would like to use):
+Next, build and run your docker environment (note that you must replace "\<yourpassword\>" with a password you would like to use):
 
         `docker build . -t project-env`
         `docker run -v $(pwd):/home/rstudio -p 8787:8787\
