@@ -12,3 +12,14 @@ A CSV and JSON file scraped from the NUFORC public database can be found at http
 Using This Project
 -----------------
 You will need to download [docker](https://docs.docker.com/get-docker/) to run this repository. 
+
+First, fork this repo and clone to your local environment (see [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo) for detailed instructions).
+
+Next, build and run your docker environment:
+
+        `docker build . -t project-env`
+        `docker run -v 'pwd':/home/rstudio -p 8787:8787\
+            -e PASSWORD=<yourpassword> -t project1-env`
+
+Then connect to the machine on port 8787 by navigating to  http://localhost:8787/ in your browser of choice.
+
