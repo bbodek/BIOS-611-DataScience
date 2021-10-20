@@ -7,7 +7,7 @@ Project Overview
 ### Background
 
 The National UFO Reporting Center (NUFORC) is a US organization which tracks and investigates UFO sightings. NUFORC maintains an online database of UFO reports, with almost 100,000 reports documented from 1949 to the present day.
-A CSV and JSON file scraped from the NUFORC public database can be found at https://data.world/timothyrenner/ufo-sightings. Whe running this project, the csv will automatically be downloaded as part of the data processing pipeline. Each line of data in the csv details a reported UFO citing, with fields includin greport summary, city where the sighting occurred, state of sighting, datetime of sighting, shape of the unidentified object, duration of the sighting, a link to the original report, the full text of the original report, the date the sighting was posted, and the latitude and longitude of the city where the sighting occurred.
+A CSV and JSON file scraped from the NUFORC public database can be found at https://data.world/timothyrenner/ufo-sightings. When running this project, the csv will automatically be downloaded as part of the data processing pipeline. Each line of data in the csv details a reported UFO citing, with fields includin greport summary, city where the sighting occurred, state of sighting, datetime of sighting, shape of the unidentified object, duration of the sighting, a link to the original report, the full text of the original report, the date the sighting was posted, and the latitude and longitude of the city where the sighting occurred.
 
 Using This Project
 -----------------
@@ -19,7 +19,8 @@ Next, build and run your docker environment (note that you must replace "\<yourp
 
         `docker build . -t project-env`
         `docker run -v $(pwd):/home/rstudio -p 8787:8787\
-            -e PASSWORD=<yourpassword> -t project1-env`
+            -p 8080:8080\
+	    -e PASSWORD=<yourpassword> -t project1-env`
 
 Then connect to the machine on port 8787 by navigating to  http://localhost:8787/ in your browser of choice.
 
