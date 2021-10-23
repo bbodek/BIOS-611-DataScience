@@ -17,11 +17,11 @@ ufo_df<-ufo_df %>% dplyr::rowwise() %>%
 
 # extract hours, seconds, and minutes from duration 
 ufo_df<-ufo_df %>% dplyr::rowwise() %>% 
-  mutate(duration_sec = as.integer(strsplit(str_match(format_duration,"([0-9]*)\\s?sec")[2]," ")[[1]][1])) %>% ungroup()
+  mutate(duration_sec = as.integer(strsplit(str_match(format_duration,"([0-9]*)\\s?(?:sec|s)")[2]," ")[[1]][1])) %>% ungroup()
 ufo_df<-ufo_df %>% dplyr::rowwise() %>% 
-  mutate(duration_hr = as.integer(strsplit(str_match(format_duration,"([0-9]*)\\s?(hour|hr)")[2]," ")[[1]][1])) %>% ungroup()
+  mutate(duration_hr = as.integer(strsplit(str_match(format_duration,"([0-9]*)\\s?(?:hour|hr)")[2]," ")[[1]][1])) %>% ungroup()
 ufo_df<-ufo_df %>% dplyr::rowwise() %>% 
-  mutate(duration_min = as.integer(strsplit(str_match(format_duration,"([0-9]*)\\s?min")[2]," ")[[1]][1])) %>% ungroup()
+  mutate(duration_min = as.integer(strsplit(str_match(format_duration,"([0-9]*)\\+?\\s?min")[2]," ")[[1]][1])) %>% ungroup()
 
 # create fields for duration in minutes, hours, and seconds
 ufo_df <- ufo_df %>% replace_na(list(duration_sec=0,duration_hr=0,duration_min=0))
