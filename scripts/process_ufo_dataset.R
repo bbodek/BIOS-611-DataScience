@@ -31,3 +31,5 @@ ufo_df<- ufo_df %>%
   mutate(duration_seconds = ifelse(duration_minutes==0 & duration_hours==0 & duration_seconds == 0, NA, duration_seconds))%>%
   mutate(duration_hours = ifelse(duration_minutes==0 & duration_hours==0 & duration_seconds == 0, NA, duration_hours))%>%
   select(-duration_sec,-duration_min,-duration_hr,-format_duration)
+
+write_csv(df,"derived_data/nuforc_ufo_clean_data.csv")
