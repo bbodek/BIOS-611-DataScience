@@ -3,7 +3,7 @@ source("scripts/utils.R")
 
 ensure_directory("derived_data")
 
-df <- read.csv("./source_data/nuforc_ufo_data.csv", header=TRUE, stringsAsFactors=FALSE)
+ufo_df <- read.csv("./source_data/nuforc_ufo_data.csv", header=TRUE, stringsAsFactors=FALSE)
 
 #extract year from ufo report date time field
 ufo_df$year<-format(ufo_df$date_time, format="%Y")
