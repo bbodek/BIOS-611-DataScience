@@ -12,6 +12,12 @@ simplify_strings <- function(s){
   s
 }
 
+strip_strings<-function(s){
+  s<-str_replace_all(s,"<|>|~","")
+  s<-str_replace_all(s,"-"," ")
+  s
+}
+
 word2num <- function(word){
   wsplit <- strsplit(tolower(word)," ")[[1]]
   one_digits <- list(zero=0, one=1, two=2, three=3, four=4, five=5,
@@ -44,3 +50,4 @@ word2num <- function(word){
   }
   paste(string, collapse = ' ')
 }
+
