@@ -3,7 +3,7 @@ source("scripts/utils.R")
 
 ensure_directory("derived_data")
 
-ufo_df <- read.csv("./source_data/nuforc_ufo_data.csv", header=TRUE, stringsAsFactors=FALSE)
+ufo_df <- read.csv("./source_data/nuforc_ufo_data.csv", header=TRUE, stringsAsFactors=FALSE,skipNul = TRUE)
 
 #extract year from ufo report date time field
 ufo_df$year<-format(ufo_df$date_time, format="%Y")
@@ -11,15 +11,17 @@ ufo_df$year<-format(ufo_df$date_time, format="%Y")
 #### clean "duration" field
 # convert spelled out numbers (such as five) to numeric 
 ufo_df<-ufo_df %>% dplyr::rowwise() %>% 
-  mutate(format_duration = strip_strings(duration)) %>% mutate(format_duration=word2num(format_duration)) %>% ungroup()
+  mutate(format_duration = strip_strings(duration)) %>% 
+  mutate(format_duration = simplify_strings(duration)) %>%
+  mutate(format_duration=word2num(format_duration)) %>% ungroup()
 
 # extract hours, seconds, and minutes from duration 
 ufo_df<-ufo_df %>% dplyr::rowwise() %>% 
-  mutate(duration_sec = as.integer(strsplit(str_match(duration,"([0-9]*)\\s?sec")[2]," ")[[1]][1])) %>% ungroup()
+  mutate(duration_sec = as.integer(strsplit(str_match(format_duration,"([0-9]*)\\s?sec")[2]," ")[[1]][1])) %>% ungroup()
 ufo_df<-ufo_df %>% dplyr::rowwise() %>% 
-  mutate(duration_hr = as.integer(strsplit(str_match(duration,"([0-9]*)\\s?(hour|hr)")[2]," ")[[1]][1])) %>% ungroup()
+  mutate(duration_hr = as.integer(strsplit(str_match(format_duration,"([0-9]*)\\s?(hour|hr)")[2]," ")[[1]][1])) %>% ungroup()
 ufo_df<-ufo_df %>% dplyr::rowwise() %>% 
-  mutate(duration_min = as.integer(strsplit(str_match(duration,"([0-9]*)\\s?min")[2]," ")[[1]][1])) %>% ungroup()
+  mutate(duration_min = as.integer(strsplit(str_match(format_duration,"([0-9]*)\\s?min")[2]," ")[[1]][1])) %>% ungroup()
 
 # create fields for duration in minutes, hours, and seconds
 ufo_df <- ufo_df %>% replace_na(list(duration_sec=0,duration_hr=0,duration_min=0))
