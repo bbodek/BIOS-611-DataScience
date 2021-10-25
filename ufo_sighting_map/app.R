@@ -27,14 +27,15 @@ shapes_in_order <- ufo_shape %>% group_by(shape) %>% tally() %>% arrange(desc(n)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
+    titlePanel("UFO Sightings by Year"),
     mainPanel( 
         #this will create a space for us to display our map
         leafletOutput(outputId = "mymap",width="125%",height=1000), 
     # Application title
-    titlePanel("UFO Reports by Year"),
+    
     ),
     # Sidebar with a slider input for number of bins 
-    absolutePanel(top=700,left=20,
+    absolutePanel(top=600,left=20,
             sliderInput("year",
                         "Year:",
                         min = 2000,
@@ -53,7 +54,8 @@ server <- function(input, output) {
         df<- ufo_shape %>% filter(year==input$year)
         leaflet(df) %>% setView(lng = -99, lat = 39, zoom = 4.2)  %>% #setting the view over ~ center of North America
             addTiles() %>% 
-            addCircles(data = df,color= ~pal(shape),lat = ~ city_latitude, lng = ~ city_longitude, weight = 1, radius = 20000, label = ~as.character(paste0("UFO Shape: ", sep = " ", shape)), fillOpacity = 0.75)
+            addCircles(data = df,color= ~pal(shape),lat = ~ city_latitude, lng = ~ city_longitude, weight = 1, radius = 20000, 
+                       label = ~as.character(paste0("UFO Shape: ", sep = " ", shape)), fillOpacity = 0.75)
     })
     
     }
