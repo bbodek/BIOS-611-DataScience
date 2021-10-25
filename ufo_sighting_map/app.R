@@ -28,23 +28,27 @@ shapes_in_order <- ufo_shape %>% group_by(shape) %>% tally() %>% arrange(desc(n)
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     titlePanel("UFO Sightings by Year"),
-    mainPanel( 
-        #this will create a space for us to display our map
-        leafletOutput(outputId = "mymap",width="125%",height=1000), 
-    # Application title
-    
-    ),
-    # Sidebar with a slider input for number of bins 
-    absolutePanel(top=600,left=20,
-            sliderInput("year",
-                        "Year:",
-                        min = 2000,
-                        max = 2021,
-                        value = 2010,
-                        step=1,
-                        sep="")
+    sidebarLayout(
+        
+        # Sidebar with a slider input for number of bins 
+        #absolutePanel(top=600,left=20,
+        sidebarPanel(left=20,
+                sliderInput("year",
+                            "Year:",
+                            min = 2000,
+                            max = 2021,
+                            value = 2010,
+                            step=1,
+                            sep="")
+            ),
+        mainPanel( 
+            #this will create a space for us to display our map
+            leafletOutput(outputId = "mymap",width="125%",height=1000), 
+            # Application title
+            
         )
         )
+)
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     #define color palete for shape of ufo
@@ -59,8 +63,8 @@ server <- function(input, output) {
     observeEvent(input$year, {
         df<- ufo_shape %>% filter(year==input$year)
         leafletProxy("mymap") %>%   
-            clearShapes() %>% 
-            addCircles(data = df,color= ~pal(shape),lat = ~ city_latitude, lng = ~ city_longitude, weight = 1, radius = 20000, 
+            clearMarkers() %>% 
+            addCircleMarkers(data = df,color= ~pal(shape),lat = ~ city_latitude, lng = ~ city_longitude, weight = 1, radius = 5, 
                        label = ~as.character(paste0("UFO Shape: ", sep = " ", shape)), fillOpacity = 0.75)
     })
 }
