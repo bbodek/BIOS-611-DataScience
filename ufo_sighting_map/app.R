@@ -51,14 +51,19 @@ server <- function(input, output) {
     pal<- colorFactor(palette='Paired',domain=factor(ufo_shape$shape,shapes_in_order))
     
     output$mymap <- renderLeaflet({
+        leaflet() %>%
+            addTiles() %>%
+            setView(lng = -99, lat = 39, zoom = 4.2)
+    })
+    
+    observeEvent(input$year, {
         df<- ufo_shape %>% filter(year==input$year)
-        leaflet(df) %>% setView(lng = -99, lat = 39, zoom = 4.2)  %>% #setting the view over ~ center of North America
-            addTiles() %>% 
+        leafletProxy("mymap") %>%   
+            clearShapes() %>% 
             addCircles(data = df,color= ~pal(shape),lat = ~ city_latitude, lng = ~ city_longitude, weight = 1, radius = 20000, 
                        label = ~as.character(paste0("UFO Shape: ", sep = " ", shape)), fillOpacity = 0.75)
     })
-    
-    }
+}
 
 # Run the application 
 shinyApp(ui = ui, server = server)
