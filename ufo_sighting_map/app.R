@@ -27,27 +27,26 @@ shapes_in_order <- ufo_shape %>% group_by(shape) %>% tally() %>% arrange(desc(n)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-    titlePanel("UFO Sightings by Year"),
-    sidebarLayout(
-        
-        # Sidebar with a slider input for number of bins 
-        #absolutePanel(top=600,left=20,
-        sidebarPanel(left=20,
+    tabPanel("Interactive map", 
+            div(class = "outer",
+                 tags$head(
+                     tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
+                     
+                 ),
+            leafletOutput(outputId = "mymap",width="155%",height=800), 
+            absolutePanel(id="controls", class="panel panel-default",fixed = TRUE,
+                  draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
+                  width = 330, height = "auto",
                 sliderInput("year",
-                            "Year:",
-                            min = 2000,
-                            max = 2021,
-                            value = 2010,
-                            step=1,
-                            sep="")
-            ),
-        mainPanel( 
-            #this will create a space for us to display our map
-            leafletOutput(outputId = "mymap",width="125%",height=1000), 
-            # Application title
-            
+                        "Year:",
+                        min = 2000,
+                        max = 2021,
+                        value = 2010,
+                        step=1,
+                        sep="")
+            )
         )
-        )
+    )
 )
 # Define server logic required to draw a histogram
 server <- function(input, output) {
@@ -57,7 +56,7 @@ server <- function(input, output) {
     output$mymap <- renderLeaflet({
         leaflet() %>%
             addTiles() %>%
-            setView(lng = -99, lat = 39, zoom = 4.2)
+            setView(lng = -80, lat = 39, zoom = 4.4)
     })
     
     observeEvent(input$year, {
