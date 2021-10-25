@@ -24,3 +24,16 @@ Next, build and run your docker environment (note that you must replace "\<yourp
 
 Then connect to the machine on port 8787 by navigating to  http://localhost:8787/ in your browser of choice.
 
+Shiny App
+---------
+This project employs a Shiny app to track trends in the location and description of UFO sightings in the United States. The app contains an interactive map displaying UFO reportings in a specific year. Users can adjust the year displayed on the map to observe trends over time.
+
+To start the R shiny app (map_ufo_sightings/app.R), first launch docker with the code below:
+
+	docker run -v `pwd`:/home/rstudio -e PASSWORD=$SECRET_PWD -p 8787:8787 -p 8788:8788 -t shiny
+
+Then use the Rstudio terminal to launch the shiny app:
+
+	PORT=8080 make shiny_app
+
+Navigate to http://localhost:8080/ in your browser to display the shiny app.
