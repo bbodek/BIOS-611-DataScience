@@ -16,7 +16,7 @@ library(stringr)
 args <- commandArgs(trailingOnly=T);
 port <- as.numeric(args[[1]]);
 
-ufo_df<-read.csv("derived_data/nuforc_ufo_clean_data.csv",header=TRUE, stringsAsFactors=FALSE)
+ufo_df<-read.csv("../derived_data/nuforc_ufo_clean_data.csv",header=TRUE, stringsAsFactors=FALSE)
 ufo_df<-ufo_df%>%filter(is.na(year)==0)%>%
     filter(year>=2000)%>%
     transform(city_latitude=as.numeric(city_latitude),city_longitude=as.numeric(city_longitude))%>%
@@ -33,9 +33,58 @@ ui <- fluidPage(
     tabPanel("Interactive map", 
             div(class = "outer",
                  tags$head(
-                     tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
+                     tags$style(HTML("input[type='number'] {
+                                              max-width: 80%;
+                                            }
+                                            
+                                            div.outer {
+                                              position: fixed;
+                                              top: 41px;
+                                              left: 0;
+                                              right: 0;
+                                              bottom: 0;
+                                              overflow: hidden;
+                                              padding: 0;
+                                            }
+                                            
+                                            /* Customize fonts */
+                                            body, label, input, button, select { 
+                                              font-family: 'Helvetica Neue', Helvetica;
+                                              font-weight: 200;
+                                            }
+                                            h1, h2, h3, h4 { font-weight: 400; }
+                                            
+                                            #controls {
+                                              /* Appearance */
+                                              background-color: white;
+                                              padding: 0 20px 20px 20px;
+                                              cursor: move;
+                                              /* Fade out while not hovering */
+                                              opacity: 0.65;
+                                              zoom: 0.9;
+                                              transition: opacity 100ms 500ms;
+                                            }
+                                            #controls:hover {
+                                              /* Fade in while hovering */
+                                              opacity: 0.95;
+                                              transition-delay: 0;
+                                            }
+                                            
+                                            /* Position and style citation */
+                                            #cite {
+                                              position: absolute;
+                                              bottom: 10px;
+                                              left: 10px;
+                                              font-size: 12px;
+                                            }
+                                            
+                                            /* If not using map tiles, show a white background */
+                                            .leaflet-container {
+                                              background-color: white !important;
+                                            }
+                                    "))
                      
-                 ),
+        ),
             leafletOutput(outputId = "mymap",width="155%",height=800), 
             absolutePanel(id="controls", class="panel panel-default",fixed = TRUE,
                   draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
