@@ -34,6 +34,6 @@ To start the R shiny app (map_ufo_sightings/app.R), first launch docker with the
 
 Then use the Rstudio terminal to launch the shiny app:
 
-	PORT=8080 make shiny_app
+	PORT=8787 make shiny_app
 
-Navigate to http://localhost:8080/ in your browser to display the shiny app.
+Navigate to http://localhost:8787/ in your browser to display the shiny app.
