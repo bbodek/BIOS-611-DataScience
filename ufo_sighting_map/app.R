@@ -16,7 +16,7 @@ library(stringr)
 args <- commandArgs(trailingOnly=T);
 port <- as.numeric(args[[1]]);
 
-ufo_df<-read.csv("../derived_data/nuforc_ufo_clean_data.csv",header=TRUE, stringsAsFactors=FALSE)
+ufo_df<-read.csv("derived_data/nuforc_ufo_clean_data.csv",header=TRUE, stringsAsFactors=FALSE)
 ufo_df<-ufo_df%>%filter(is.na(year)==0)%>%
     filter(year>=2000)%>%
     transform(city_latitude=as.numeric(city_latitude),city_longitude=as.numeric(city_longitude))%>%
@@ -72,5 +72,6 @@ server <- function(input, output) {
 }
 
 # Run the application 
+#shinyApp(ui = ui, server = server)
 shinyApp(ui = ui, server = server, options = list(port=port,
                                                 host="0.0.0.0"))
