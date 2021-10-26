@@ -41,6 +41,14 @@ ufo_df<- ufo_df %>%
 ##### clean "shape" field ######
 ################################
 
-ufo_df <- ufo_df %>% mutate(shape = simplify_strings(shape)) %>% mutate(shape = ifelse(is.na(shape)==1|shape=='','unknown',shape))
+ufo_df <- ufo_df %>% mutate(shape = simplify_strings(shape)) %>% 
+  mutate(shape = ifelse(is.na(shape)==1|shape=='','unknown',shape))
+# keep top 11 shapes, convert other to "Other/Unknown" category
+top_shapes <- ufo_df %>% group_by(shape) %>% 
+  tally() %>% arrange(desc(n),shape) %>% 
+  filter(!shape %in% c("other","unknown")) %>% top_n(11) %>% 
+  pull(shape)
+ufo_df<-ufo_df %>% mutate(shape = ifelse(shape %in% top_shapes,shape,"Other/Unknown"))
+
 
 write_csv(ufo_df,"derived_data/nuforc_ufo_clean_data.csv")
