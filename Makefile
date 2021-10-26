@@ -2,8 +2,8 @@ PHONY: clean
 PHONY: shiny_app
 
 clean:
-			rm -r source_data/*
-			rm -r derived_data/*
+			rm -f source_data/*
+			rm -f derived_data/*
 
 shiny_app: derived_data/nuforc_ufo_clean_data.csv ufo_sighting_map/app.R ufo_sighting_map/www/style.css
 			cd ufo_sighting_map && Rscript app.R ${PORT}			
