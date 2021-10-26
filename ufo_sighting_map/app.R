@@ -12,6 +12,7 @@ library(leaflet)
 library(dplyr)
 library(leaflet.extras)
 library(stringr)
+library(shinyWidgets)
 
 args <- commandArgs(trailingOnly=T);
 port <- as.numeric(args[[1]]);
@@ -24,8 +25,7 @@ ufo_df<-ufo_df%>%filter(is.na(year)==0)%>%
     select(-stats,-text,-posted,-duration_hours,-duration_minutes,-duration,-duration_seconds)
 
 
-ufo_shape<-ufo_df %>% filter(str_detect(shape,"2018.*")==0)
-shapes_in_order <- ufo_shape %>% group_by(shape) %>% tally() %>% arrange(desc(n),shape) %>% pull(shape)
+shapes_in_order <- ufo_df %>% group_by(shape) %>% tally() %>% arrange(desc(n),shape) %>% pull(shape)
 
 
 # Define UI for application that draws a histogram
@@ -87,6 +87,7 @@ ui <- fluidPage(
                      
         ),
             leafletOutput(outputId = "mymap",width="155%",height=800), 
+        
             absolutePanel(id="controls", class="panel panel-default",fixed = TRUE,
                   draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
                   width = 330, height = "auto",
@@ -96,7 +97,14 @@ ui <- fluidPage(
                         max = 2021,
                         value = 2010,
                         step=1,
-                        sep="")
+                        sep=""),
+                pickerInput(
+                    inputId="shape", label="Choose UFO Shapes to Display",
+                    choices = shapes_in_order,
+                    selected=shapes_in_order,
+                    option= list(`actions-box`=TRUE, size=10, `selected-text-format`="count > 3"),
+                    multiple=TRUE
+                    )
             )
         )
     )
@@ -104,16 +112,21 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     #define color palete for shape of ufo
-    pal<- colorFactor(palette='Paired',domain=factor(ufo_shape$shape,shapes_in_order))
+    pal<- colorFactor(palette='Paired',domain=factor(ufo_df$shape,shapes_in_order))
+    
+    #reactive expression use to observe both inputs
+    toListen <- reactive({
+        list(input$year,input$shape)
+    })
     
     output$mymap <- renderLeaflet({
         leaflet() %>%
             addTiles() %>%
             setView(lng = -80, lat = 39, zoom = 4.4)
     })
-    
-    observeEvent(input$year, {
-        df<- ufo_shape %>% filter(year==input$year)
+    # changes displayed markers as user by year and shape of ufo sighting
+    observeEvent(toListen(), {
+        df<- ufo_df %>% filter(year==input$year & shape %in% input$shape)
         leafletProxy("mymap") %>%   
             clearMarkers() %>% 
             addCircleMarkers(data = df,color= ~pal(shape),lat = ~ city_latitude, lng = ~ city_longitude, weight = 1, radius = 5, 
@@ -125,3 +138,4 @@ server <- function(input, output) {
 #shinyApp(ui = ui, server = server)
 shinyApp(ui = ui, server = server, options = list(port=port,
                                                 host="0.0.0.0"))
+
