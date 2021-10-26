@@ -33,6 +33,7 @@ ui <- fluidPage(
     tabPanel("Interactive map", 
             div(class = "outer",
                  tags$head(
+                     # this next section contains custom HTML code used to style the RShiny App
                      tags$style(HTML("input[type='number'] {
                                               max-width: 80%;
                                             }
