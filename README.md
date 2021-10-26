@@ -18,8 +18,7 @@ First, fork this repo and clone to your local environment (see [here](https://do
 Next, build and run your docker environment (note that you must replace "\<yourpassword\>" with a password you would like to use):
 
         docker build . -t project-env
-        docker run -v $(pwd):/home/rstudio -p 8787:8787\
-	    -e PASSWORD=<yourpassword> -t project-env
+        docker run -v $(pwd):/home/rstudio -p 8787:8787 -e PASSWORD=<yourpassword> -t project-env
 
 Then connect to the machine on port 8787 by navigating to  http://localhost:8787/ in your browser of choice.
 
