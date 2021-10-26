@@ -28,9 +28,9 @@ Shiny App
 ---------
 This project employs a Shiny app to track trends in the location and description of UFO sightings in the United States. The app contains an interactive map displaying UFO reportings in a specific year. Users can adjust the year displayed on the map to observe trends over time.
 
-To start the R shiny app (map_ufo_sightings/app.R), first launch docker with the code below:
+To start the R shiny app (map_ufo_sightings/app.R), first launch docker with the code below (note that if you have not already, you must first build the docker container as described in the "Suing This Project" section of this ReadMe):
 
-	docker run -v `pwd`:/home/rstudio -e PASSWORD=$SECRET_PWD -p 8787:8787 -p 8788:8788 -t shiny
+	docker run -v $(pwd):/home/rstudio -e PASSWORD=<yourpassword> -p 8787:8787 -p 8788:8788 -t project-env
 
 Then use the Rstudio terminal to launch the shiny app:
 
