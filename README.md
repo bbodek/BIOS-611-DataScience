@@ -24,7 +24,7 @@ Then connect to the machine on port 8787 by navigating to  http://localhost:8787
 
 Shiny App
 ---------
-This project employs a Shiny app to track trends in the location and description of UFO sightings in the United States. The app contains an interactive map displaying UFO reportings in a specific year. Users can adjust the year displayed on the map to observe trends over time.
+This project employs a Shiny app to track trends in the location and description of UFO sightings in the United States. The app contains an interactive map displaying UFO reportings in a specific year. Users can adjust the year displayed on the map to observe trends over time, and adjust the UFO shapes displayed to examine trends in UFO sigthing descriptions.
 
 To start the R shiny app (map_ufo_sightings/app.R), first launch docker with the code below (note that if you have not already, you must first build the docker container as described in the "Suing This Project" section of this ReadMe):
 
