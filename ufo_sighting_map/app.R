@@ -105,7 +105,8 @@ ui <- fluidPage(
                     selected=shapes_in_order,
                     option= list(`actions-box`=TRUE, size=10, `selected-text-format`="count > 3"),
                     multiple=TRUE
-                    )
+                    ),
+                h5("Note: click on UFO sighting to display more information.")
             )
         )
     )
@@ -135,8 +136,6 @@ server <- function(input, output) {
     })
     # Shows a popup at given location
     showUfoPopup <- function(id,ufo_df){
-        print(paste0("index: ",id))
-        print(typeof(id))
         selectedufo <- ufo_df %>% filter((ufo_df$index) == (id))
         print(selectedufo)
         content <- as.character(tagList(
@@ -166,4 +165,3 @@ server <- function(input, output) {
 #shinyApp(ui = ui, server = server)
 shinyApp(ui = ui, server = server, options = list(port=port,
                                                 host="0.0.0.0"))
-
