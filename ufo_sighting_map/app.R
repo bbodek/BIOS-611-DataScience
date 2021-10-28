@@ -17,18 +17,18 @@ library(shinyWidgets)
 args <- commandArgs(trailingOnly=T);
 port <- as.numeric(args[[1]]);
 
+#data processing and filtering
 ufo_df<-read.csv("../derived_data/nuforc_ufo_clean_data.csv",header=TRUE, stringsAsFactors=FALSE)
 ufo_df<-ufo_df%>%filter(is.na(year)==0)%>%
     filter(year>=2000)%>%
     transform(city_latitude=as.numeric(city_latitude),city_longitude=as.numeric(city_longitude))%>%
     filter(is.na(city_latitude)==0)%>%
     select(-stats,-text,-posted,-duration_hours,-duration_minutes,-duration,-duration_seconds)
-
+# add index to later us as unique identifier
+ufo_df$index<-1:nrow(ufo_df)
 
 shapes_in_order <- ufo_df %>% group_by(shape) %>% tally() %>% arrange(desc(n),shape) %>% pull(shape)
 
-
-# Define UI for application that draws a histogram
 ui <- fluidPage(
     tabPanel("Interactive map", 
             div(class = "outer",
@@ -85,9 +85,10 @@ ui <- fluidPage(
                                             }
                                     "))
                      
-        ),
+        ),  
+            # control the map object
             leafletOutput(outputId = "mymap",width="155%",height=800), 
-        
+            # moveable panel for interactive filtering
             absolutePanel(id="controls", class="panel panel-default",fixed = TRUE,
                   draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
                   width = 330, height = "auto",
@@ -109,12 +110,12 @@ ui <- fluidPage(
         )
     )
 )
-# Define server logic required to draw a histogram
+
 server <- function(input, output) {
     #define color palete for shape of ufo
     pal<- colorFactor(palette='Paired',domain=factor(ufo_df$shape,shapes_in_order))
     
-    #reactive expression use to observe both inputs
+    #reactive expression used to observe both inputs (year and shape selection)
     toListen <- reactive({
         list(input$year,input$shape)
     })
@@ -124,13 +125,40 @@ server <- function(input, output) {
             addTiles() %>%
             setView(lng = -80, lat = 39, zoom = 4.4)
     })
-    # changes displayed markers as user by year and shape of ufo sighting
+    # changes displayed markers as user selects year and shape of UFO sighting
     observeEvent(toListen(), {
         df<- ufo_df %>% filter(year==input$year & shape %in% input$shape)
         leafletProxy("mymap") %>%   
             clearMarkers() %>% 
-            addCircleMarkers(data = df,color= ~pal(shape),lat = ~ city_latitude, lng = ~ city_longitude, weight = 1, radius = 5, 
+            addCircleMarkers(data = df,color= ~pal(shape),lat = ~ city_latitude, lng = ~ city_longitude, layerId = ~ index, weight = 1, radius = 5, 
                        label = ~as.character(paste0("UFO Shape: ", sep = " ", shape)), fillOpacity = 0.75)
+    })
+    # Shows a popup at given location
+    showUfoPopup <- function(id,ufo_df){
+        print(paste0("index: ",id))
+        print(typeof(id))
+        selectedufo <- ufo_df %>% filter((ufo_df$index) == (id))
+        print(selectedufo)
+        content <- as.character(tagList(
+            tags$strong(HTML(sprintf("%s, %s %s",
+              selectedufo$city, selectedufo$state, selectedufo$date_time
+              ))), tags$br(),
+            sprintf("Shape: %s", selectedufo$shape), tags$br(),
+            sprintf("Duration (minutes): %s", as.integer(selectedufo$duration_minutes)), tags$br(),
+            sprintf("Report link: %s", selectedufo$report_link)
+        ))
+        leafletProxy("mymap") %>% addPopups(selectedufo$city_longitude, selectedufo$city_latitude, content)
+    }
+    
+    # When map is clicked, show a popup with more info on the UFO sighting
+    observeEvent(input$mymap_marker_click, {
+        click<-input$mymap_marker_click
+        leafletProxy("mymap") %>% clearPopups()
+        if (is.null(click))
+            return()
+        isolate({
+            showUfoPopup(click$id,ufo_df)
+        })
     })
 }
 
