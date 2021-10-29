@@ -17,3 +17,6 @@ derived_data/nuforc_ufo_clean_data.csv: source_data/nuforc_ufo_data.csv scripts/
 
 figures/top_ufo_shapes.png: derived_data/nuforc_ufo_clean_data.csv scripts/utils.R 
 			Rscript scripts/top_ufo_shapes.R
+			
+figures/duration_shape_boxplot.png: derived_data/nuforc_ufo_clean_data.csv scripts/utils.R 
+			Rscript scripts/duration_shape_boxplot.R
