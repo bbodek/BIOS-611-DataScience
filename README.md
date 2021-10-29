@@ -35,3 +35,12 @@ Then use the Rstudio terminal to launch the shiny app:
 	PORT=8788 make shiny_app
 
 Navigate to http://localhost:8788/ in your browser to display the shiny app.
+
+Makefile
+--------
+The Makefile included in this repository will help build major components
+ of the project. 
+ 
+ For example, to build a figure displaying a bar chart of the top observed UFO shapes, run the following code in the terminal or Rstudio :
+ 	
+	make figures/top_ufo_shapes.png
