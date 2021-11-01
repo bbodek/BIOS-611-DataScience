@@ -1,5 +1,15 @@
 FROM rocker/verse 
-RUN apt update && apt-get install -y emacs openssh-server python3-pip
+RUN apt update && apt-get install -y emacs\
+	openssh-server\
+  ne\
+  sqlite3\
+	texlive-base\
+	texlive-binaries\
+  texlive-latex-base\
+	texlive-latex-recommended\
+	texlive-pictures\
+  texlive-latex-extra\
+	python3-pip
 RUN pip3 install --pre --user hy
 RUN pip3 install tensorflow sklearn pandas numpy pandasql 
 RUN R -e "install.packages(\"reticulate\")"
@@ -12,3 +22,4 @@ RUN R -e "install.packages(\"shinyWidgets\")"
 RUN R -e "install.packages(\"ggpubr\")"
 RUN R -e "install.packages(\"tinytex\")"
 RUN R -e "tinytex::install_tinytex()"
+
