@@ -29,5 +29,6 @@ sighting_df<-df%>%
   mutate(year=as.integer(year))
 
 sighting_pop_df<-inner_join(sighting_df,tidy_state,by = c("state" = "state", "year"="year"))%>%
-  mutate(sightings_per_100k = 100000*sightings/population)
-                           
+  mutate(sightings_per_100k = 100000*sightings/population)%>%arrange(sightings_per_100k,asc=FALSE)
+
+write_csv(sighting_pop_df,"./derived_data/sighting_by_population.csv")                        
