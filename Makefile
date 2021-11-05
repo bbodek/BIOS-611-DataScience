@@ -5,9 +5,9 @@ clean:
 			rm -f source_data/nuforc_ufo_data
 			rm -f derived_data/*
 			rm -f figures/*
-			rm *.pdf
-			rm *.out 
-			rm *.aux
+			rm -f *.pdf
+			rm -f *.out 
+			rm -f *.aux
 	
 shiny_app: derived_data/nuforc_ufo_clean_data.csv ufo_sighting_map/app.R
 			cd ufo_sighting_map && Rscript app.R ${PORT}			
