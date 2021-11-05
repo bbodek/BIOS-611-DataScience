@@ -2,7 +2,7 @@ PHONY: clean
 PHONY: shiny_app
 
 clean:
-			rm -f source_data/*
+			rm -f source_data/nuforc_ufo_data
 			rm -f derived_data/*
 			rm -f figures/*
 			rm *.pdf
@@ -12,7 +12,7 @@ clean:
 shiny_app: derived_data/nuforc_ufo_clean_data.csv ufo_sighting_map/app.R
 			cd ufo_sighting_map && Rscript app.R ${PORT}			
 
-report.pdf: report.tex
+report.pdf: report.tex 
 			pdflatex report.tex
 
 source_data/nuforc_ufo_data.csv: scripts/make_ufo_dataset.R scripts/utils.R
