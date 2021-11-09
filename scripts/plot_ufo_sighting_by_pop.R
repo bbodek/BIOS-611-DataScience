@@ -8,7 +8,7 @@ df<-df%>%
   group_by(state)%>%
   summarize(sighting_per_100k_peopleyears=100000*sum(sightings)/sum(population),avg_pop=round(mean(population)))
 
-ggplot(df, aes(x=avg_pop, y=sighting_per_100k_peopleyears)) +
+p<-ggplot(df, aes(x=avg_pop, y=sighting_per_100k_peopleyears)) +
          geom_point()+
          geom_text(aes(label=state),nudge_x=0.5, nudge_y=0.1,check_overlap=TRUE,size=2.5) +
          geom_smooth(method="lm", se=TRUE,formula="y~log(x)",color='black') +
@@ -20,3 +20,6 @@ ggplot(df, aes(x=avg_pop, y=sighting_per_100k_peopleyears)) +
          scale_x_continuous(labels = scales::comma)+
          xlab("Average State Population (per year, 2010-2019)")+
          ylab("UFO Sightings per 100k People Years")
+
+ggsave("figures/plot_ufo_sighting_by_population.png",plot=p)
+p
