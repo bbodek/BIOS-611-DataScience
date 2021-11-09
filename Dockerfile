@@ -10,16 +10,9 @@ RUN apt update && apt-get install -y emacs\
 	texlive-pictures\
   texlive-latex-extra\
 	python3-pip
+RUN adduser rstudio sudo
 RUN pip3 install --pre --user hy
 RUN pip3 install tensorflow sklearn pandas numpy pandasql 
-RUN R -e "install.packages(\"reticulate\")"
-RUN R -e "install.packages(\"tidyverse\")"
-RUN R -e "install.packages(\"ggplot2\")"
-RUN R -e "install.packages(\"shiny\")"
-RUN R -e "install.packages(\"leaflet\")"
-RUN R -e "install.packages(\"leaflet.extras\")"
-RUN R -e "install.packages(\"shinyWidgets\")"
-RUN R -e "install.packages(\"ggpubr\")"
-RUN R -e "install.packages(\"tinytex\")"
-RUN R -e "tinytex::install_tinytex()"
+RUN R -e "install.packages(c('reticulate','tidyverse','ggplot2','shiny','leaflet','leaflet.extras','shinyWidgets','ggpubr','tinytex'))"
+
 
