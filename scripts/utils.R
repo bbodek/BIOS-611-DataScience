@@ -1,4 +1,5 @@
 library(tidyverse);
+library(dplyr)
 
 ensure_directory <- function(directory){
     if(!dir.exists(directory)){
