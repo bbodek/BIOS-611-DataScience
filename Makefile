@@ -27,10 +27,7 @@ figures/top_ufo_shapes.png: derived_data/nuforc_ufo_clean_data.csv scripts/utils
 figures/duration_shape_boxplot.png: derived_data/nuforc_ufo_clean_data.csv scripts/utils.R scripts/duration_shape_boxplot.R
 			Rscript scripts/duration_shape_boxplot.R
 			
-derived_data/sighting_by_population.csv: source_data/census_est_pop.csv derived_data/nuforc_ufo_clean_data.csv scripts/utils.R scripts/ufo_sighting_by_pop.R
-			Rscript scripts/ufo_sighting_by_pop.R
-			
-figures/plot_ufo_sighting_by_population.png: derived_data/sighting_by_population.csv scripts/plot_ufo_sighting_by_population.R scripts/utils.R
+figures/plot_ufo_sighting_by_population.png: derived_data/sighting_by_pop_density.csv scripts/plot_ufo_sighting_by_pop_density.R scripts/utils.R
 			Rscript scripts/plot_ufo_sighting_by_population.R
 			
 derived_data/sighting_by_pop_density.csv: source_data/census_est_pop.csv source_data/state_area.csv derived_data/nuforc_ufo_clean_data.csv scripts/utils.R scripts/ufo_sighting_by_pop_density.R
