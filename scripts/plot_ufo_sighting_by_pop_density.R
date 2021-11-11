@@ -18,8 +18,8 @@ p<-ggplot(df, aes(x=avg_pop_density, y=sighting_per_100k_peopleyears)) +
                   parse=TRUE,label.x=500,label.y = 4,
                   color="red")+
   #scale_x_continuous(labels = scales::comma)+
-  xlab("Average State Population (per year, 2010-2019)")+
+  xlab("State Population Density (Person / Square Mile)")+
   ylab("UFO Sightings per 100k People Years")
 
-#ggsave("figures/plot_ufo_sighting_by_population.png",plot=p)
+ggsave("figures/ufo_sighting_by_population_density.png",plot=p)
 p
