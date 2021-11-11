@@ -2,7 +2,7 @@ library(ggpmisc)
 library(tidyverse)
 library(ggplot)
 
-df<-read_csv("./derived_data/sighting_by_population.csv")
+df<-read_csv("./derived_data/sighting_by_pop_density.csv")
 df<-df%>%
   filter(year>=2015)%>%
   group_by(state)%>%
