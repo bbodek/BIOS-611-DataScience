@@ -4,12 +4,12 @@ source("scripts/utils.R")
 
 df<-read.csv("./derived_data/nuforc_ufo_clean_data.csv")
 state_df<-read.csv("./source_data/census_est_pop.csv")
-state_area<-read.csv("./source_data/state_area.csv")
+state_area<-data.frame('state'=state.name,'state_abb' = state.abb, 'LandArea' = state.area)
 
 # create tidy dataframe of state and population data from census population estimates
 tidy_state <- state_df%>%
   mutate(state=substring(region,2))%>%
-  left_join(state_area,by=c('state'='State'))%>%
+  left_join(state_area,by=c('state'='state'))%>%
   pivot_longer(
     cols = starts_with("X"), 
     names_to = "year", 
