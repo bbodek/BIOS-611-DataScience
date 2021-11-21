@@ -52,3 +52,21 @@ word2num <- function(word){
   paste(string, collapse = ' ')
 }
 
+tfidf<-function(text){
+  corpus <- tm::Corpus(tm::VectorSource(text_df$text))
+  # convert to UTF-8
+  corpus.cleaned <- tm::tm_map(corpus, function(x) iconv(x, to='UTF-8', sub='byte'))
+  # remove stopwords
+  corpus.cleaned <- tm::tm_map(corpus.cleaned, tm::removeWords, tm::stopwords('english'))
+  # stem words
+  corpus.cleaned <- tm::tm_map(corpus, tm::stemDocument, language = "english")
+  # remove excessive whitespaces
+  corpus.cleaned <- tm::tm_map(corpus.cleaned, tm::stripWhitespace)
+  # build feature matrices
+  tdm <- tm::DocumentTermMatrix(corpus.cleaned) 
+  tdm.tfidf <- tm::weightTfIdf(tdm)
+  # remove sparse features (than 90% empty)
+  tdm.tfidf <- tm::removeSparseTerms(tdm.tfidf, 0.98)
+  # convert tdm.tfidf to a matrix
+  tfidf.matrix <- as.matrix(tdm.tfidf)
+}
