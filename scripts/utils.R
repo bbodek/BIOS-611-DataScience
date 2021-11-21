@@ -14,7 +14,7 @@ simplify_strings <- function(s){
 }
 
 strip_strings<-function(s){
-  s<-str_replace_all(s,"<|>|~|\)|\(|\\|\/|,|\.","")
+  s<-str_replace_all(s,"<|>|~|\\)|\\(|\\|\\/|,|\\.","")
   s<-str_replace_all(s,"-"," ")
   s
 }
