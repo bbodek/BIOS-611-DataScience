@@ -53,7 +53,7 @@ word2num <- function(word){
 }
 
 tfidf<-function(text){
-  corpus <- tm::Corpus(tm::VectorSource(text_df$text))
+  corpus <- tm::Corpus(tm::VectorSource(text))
   # convert to UTF-8
   corpus.cleaned <- tm::tm_map(corpus, function(x) iconv(x, to='UTF-8', sub='byte'))
   # remove stopwords
