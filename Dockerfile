@@ -13,6 +13,6 @@ RUN apt update && apt-get install -y emacs\
 RUN adduser rstudio sudo
 RUN pip3 install --pre --user hy
 RUN pip3 install tensorflow sklearn pandas numpy pandasql 
-RUN R -e "install.packages(c('ggpmisc','reticulate','stringr',tidyverse','ggplot2','tm','SnowballC','shiny','leaflet','leaflet.extras','shinyWidgets','ggpubr','tinytex'))"
+RUN R -e "install.packages(c('ggpmisc','NbClust','reticulate','stringr',tidyverse','ggplot2','tm','SnowballC','shiny','leaflet','leaflet.extras','shinyWidgets','ggpubr','tinytex'))"
 
 
