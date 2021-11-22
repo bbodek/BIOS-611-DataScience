@@ -19,7 +19,6 @@ corpus <- tm::Corpus(tm::VectorSource(text))
 corpus <- corpus %>%
   tm_map(removeNumbers) %>%
   tm_map(removePunctuation) 
-
 corpus <- tm_map(corpus, content_transformer(tolower))
 corpus <- tm_map(corpus, removeWords, stopwords("english"))
 #corpus <- tm_map(corpus, stemDocument, language = "english")
