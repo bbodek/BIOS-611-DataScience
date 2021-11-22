@@ -1,27 +1,13 @@
 library(tm)
 library(dplyr)
 library(cluster)
-library(NbClust)
 library(factoextra)
 
 source("scripts/utils.R")
 
-ufo_df<-read.csv("derived_data/nuforc_ufo_clean_data.csv", header=TRUE, stringsAsFactors=FALSE)
-ufo_df<- ufo_df%>%filter(year==2019)%>%filter(state %in% state.abb)
-ufo_df<-ufo_df %>% dplyr::rowwise() %>% 
-  mutate(text = strip_strings(text)) %>% 
-  ungroup()
-
-# create dataframe grouped by state with concatenated text for each state
-text_df<-ufo_df%>%select(state,text)%>%
-  group_by(state)%>%
-  summarise(text=paste(text,collapse=" "))
-  
-text_df<-text_df[order(text_df$state),]
-states<-text_df%>%pull(state)
-
-tfidf.matrix<-tfidf(text_df$text)
-rownames(tfidf.matrix)<-states
+df<-read.csv("derived_data/ufo_description_tfidf.csv", header=TRUE, stringsAsFactors=FALSE)
+tfidf.matrix<-as.matrix(df[,-1])
+rownames(tfidf.matrix)<-df[,1]
 dist.matrix = proxy::dist(tfidf.matrix, method = "cosine")
 
 # see which method has the highest agglomerative coefficient (ac)
@@ -34,18 +20,22 @@ ac <- function(x) {
 }
 # create table of clustering methods and their AC score
 cluster_ac<-map_dbl(m, ac)
+# choose the 'best' method, and use for final clustering
 best_method<-m[which.max(cluster_ac)]
-
-#nb<-NbClust(diss=dist.matrix,method="ward.D",,distance=NULL, min.nc=3,max.nc=20,index="dunn")
-
 clustering.hierarchical <- hclust(dist.matrix, method = best_method)
+
+#select number of clusters
 h.clusters <- cutree(clustering.hierarchical, k = 5)
 
+# plot dendrogram
+png(file="./figures/state_dendogram.png",
+    width=1000, height=500)
+  plot(clustering.hierarchical, cex = 0.7, hang = -1)
+  rect.hclust(clustering.hierarchical, k = 5, border = 2:8)
+dev.off()
 
-text_df$clusters<-unname(h.clusters)
-text_df%>% group_by(clusters)%>%tally()
-plot(clustering.hierarchical, cex = 0.6, hang = -1)
-rect.hclust(clustering.hierarchical, k = 5, border = 2:8)
-
-fviz_cluster(list(data = dist.matrix, cluster = h.clusters))
-write_csv(text_df,"derived_data/clustered_ufo_descriptions.csv")
+# plot clusters (with pca)
+png(file="./figures/state_clusters.png",
+    width=750, height=500)
+  fviz_cluster(list(data = dist.matrix, cluster = h.clusters))
+  dev.off()
