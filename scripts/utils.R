@@ -55,11 +55,9 @@ word2num <- function(word){
 
 tfidf<-function(text){
   corpus <- tm::Corpus(tm::VectorSource(text))
-  # convert to UTF-8
-  corpus.cleaned <- tm::tm_map(corpus, function(x) iconv(x, to='UTF-8', sub='byte'))
   # stem words
   # remove punctuation
-  corpus.cleaned <- tm_map(removePunctuation) 
+  corpus.cleaned <- tm_map(corpus,removePunctuation) 
   # remove stopwords
   corpus.cleaned <- tm::tm_map(corpus, tm::stemDocument, language = "english")
   # remove stopwords
