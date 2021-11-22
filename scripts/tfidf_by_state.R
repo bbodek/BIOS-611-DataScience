@@ -23,6 +23,6 @@ tfidf.matrix<-tfidf(text_df$text)
 rownames(tfidf.matrix)<-states
 df<-as.data.frame(tfidf.matrix)
 df <- tibble::rownames_to_column(df, "State")
-
+df <- select(-VALUE)
 
 write_csv(df,"derived_data/ufo_description_tfidf.csv")
