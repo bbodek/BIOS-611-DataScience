@@ -63,11 +63,15 @@ tfidf<-function(text){
   corpus.cleaned <- tm::tm_map(corpus.cleaned, tm::stripWhitespace)
   # remove stopwords
   corpus.cleaned <- tm::tm_map(corpus.cleaned, tm::removeWords, tm::stopwords('english'))
+  # remove numbers
+  corpus.cleaned <- tm_map(removeNumbers)
+  # remove punctuation
+  corpus.cleaned <- tm_map(removePunctuation) 
   # build feature matrices
   tdm <- tm::DocumentTermMatrix(corpus.cleaned) 
   tdm.tfidf <- tm::weightTfIdf(tdm)
   # remove sparse features (than 90% empty)
-  tdm.tfidf <- tm::removeSparseTerms(tdm.tfidf, 0.90)
+  tdm.tfidf <- tm::removeSparseTerms(tdm.tfidf, 0.99)
   # convert tdm.tfidf to a matrix
   tfidf.matrix <- as.matrix(tdm.tfidf)
 }
