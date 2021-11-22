@@ -58,15 +58,14 @@ tfidf<-function(text){
   # convert to UTF-8
   corpus.cleaned <- tm::tm_map(corpus, function(x) iconv(x, to='UTF-8', sub='byte'))
   # stem words
+  # remove punctuation
+  corpus.cleaned <- tm_map(removePunctuation) 
+  # remove stopwords
   corpus.cleaned <- tm::tm_map(corpus, tm::stemDocument, language = "english")
-  # remove excessive whitespaces
-  corpus.cleaned <- tm::tm_map(corpus.cleaned, tm::stripWhitespace)
   # remove stopwords
   corpus.cleaned <- tm::tm_map(corpus.cleaned, tm::removeWords, tm::stopwords('english'))
   # remove numbers
   corpus.cleaned <- tm_map(removeNumbers)
-  # remove punctuation
-  corpus.cleaned <- tm_map(removePunctuation) 
   # build feature matrices
   tdm <- tm::DocumentTermMatrix(corpus.cleaned) 
   tdm.tfidf <- tm::weightTfIdf(tdm)
