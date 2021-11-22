@@ -63,7 +63,7 @@ tfidf<-function(text){
   # remove stopwords
   corpus.cleaned <- tm::tm_map(corpus.cleaned, tm::removeWords, tm::stopwords('english'))
   # remove numbers
-  corpus.cleaned <- tm_map(corpus.cleaned,removeNumbers)
+  corpus.cleaned <- tm::tm_map(corpus.cleaned,removeNumbers)
   # build feature matrices
   tdm <- tm::DocumentTermMatrix(corpus.cleaned) 
   tdm.tfidf <- tm::weightTfIdf(tdm)
