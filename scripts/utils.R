@@ -57,7 +57,7 @@ tfidf<-function(text){
   corpus <- tm::Corpus(tm::VectorSource(text))
   # stem words
   # remove punctuation
-  corpus.cleaned <- tm_map(corpus.cleaned,removePunctuation) 
+  corpus.cleaned <- tm_map(corpus,removePunctuation) 
   # remove stopwords
   corpus.cleaned <- tm::tm_map(corpus.cleaned, tm::stemDocument, language = "english")
   # remove stopwords
