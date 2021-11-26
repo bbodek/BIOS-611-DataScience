@@ -27,6 +27,12 @@ clustering.hierarchical <- hclust(dist.matrix, method = best_method)
 #select number of clusters
 h.clusters <- cutree(clustering.hierarchical, k = 5)
 
+# write clusters to csv
+cluster_df<-data.frame(matrix(nrow=50,ncol=0))
+cluster_df$cluster<-h.clusters
+cluster_df$state<-names(h.clusters)
+write_csv(cluster_df,"derived_data/clusters.csv")
+
 # plot dendrogram
 png(file="./figures/state_dendogram.png",
     width=1000, height=500)
