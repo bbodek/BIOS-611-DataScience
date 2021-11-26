@@ -1,4 +1,5 @@
 FROM rocker/verse 
+MAINTAINER Ben Bodek <bbodek@unc.edu>
 RUN apt update && apt-get install -y emacs\
 	openssh-server\
   ne\
@@ -10,9 +11,7 @@ RUN apt update && apt-get install -y emacs\
 	texlive-pictures\
   texlive-latex-extra\
 	python3-pip
-RUN adduser rstudio sudo
-RUN pip3 install --pre --user hy
-RUN pip3 install tensorflow sklearn pandas numpy pandasql 
-RUN R -e "install.packages(c('ggpmisc','NbClust','wordcloud','RColorBrewer','factoextra','reticulate','stringr',tidyverse','ggplot2','tm','SnowballC','shiny','leaflet','leaflet.extras','shinyWidgets','ggpubr','tinytex'))"
+RUN adduser rstudio sudo 
+RUN R -e "install.packages(c('ggpmisc','NbClust','wordcloud','RColorBrewer','factoextra','reticulate','stringr','tidyverse','ggplot2','tm','SnowballC','shiny','leaflet','leaflet.extras','shinyWidgets','ggpubr','tinytex'))"
 
 
