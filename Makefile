@@ -27,6 +27,9 @@ derived_data/ufo_description_tfidf.csv: derived_data/nuforc_ufo_clean_data.csv s
 derived_data/sighting_by_pop_density.csv: source_data/census_est_pop.csv source_data/state_area.csv derived_data/nuforc_ufo_clean_data.csv scripts/utils.R scripts/ufo_sighting_by_pop_density.R
 			Rscript scripts/ufo_sighting_by_pop_density.R
 
+derived_data/clusters.csv: derived_data/ufo_description_tfidf.csv scripts/utils.R scripts/hierarchical_clustering.R
+			Rscript scripts/hierarchical_clustering.R
+
 figures/state_dendogram.png: derived_data/ufo_description_tfidf.csv scripts/utils.R scripts/hierarchical_clustering.R
 			Rscript scripts/hierarchical_clustering.R
 			
