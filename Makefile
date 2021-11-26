@@ -43,7 +43,7 @@ figures/duration_shape_boxplot.png: derived_data/nuforc_ufo_clean_data.csv scrip
 			Rscript scripts/duration_shape_boxplot.R
 			
 figures/plot_ufo_sighting_by_population.png: derived_data/sighting_by_pop_density.csv scripts/plot_ufo_sighting_by_pop_density.R scripts/utils.R
-			Rscript scripts/plot_ufo_sighting_by_population.R
+			Rscript scripts/plot_ufo_sighting_by_pop.R
 
 figures/ufo_sighting_by_population_density.png: derived_data/sighting_by_pop_density.csv scripts/plot_ufo_sighting_by_pop_density.R scripts/utils.R
 			Rscript scripts/plot_ufo_sighting_by_pop_density.R
