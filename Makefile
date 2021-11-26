@@ -44,3 +44,6 @@ figures/plot_ufo_sighting_by_population.png: derived_data/sighting_by_pop_densit
 
 figures/ufo_sighting_by_population_density.png: derived_data/sighting_by_pop_density.csv scripts/plot_ufo_sighting_by_pop_density.R scripts/utils.R
 			Rscript scripts/plot_ufo_sighting_by_pop_density.R
+			
+/figures/word_cloud.png: derived_data/nuforc_ufo_clean_data.csv scripts/utils.R scripts/word_cloud.R 
+			Rscript scripts.word_cloud.R
