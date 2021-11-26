@@ -28,7 +28,9 @@ tfidf.matrix <- as.matrix(tdm)
 words <- sort(rowSums(tfidf.matrix),decreasing=TRUE) 
 df <- data.frame(word = names(words),freq=words)
 set.seed(42)
+png(file="./figures/word_cloud.png",width=5,height=5,units="in",res=350)
+par(mar = c(0,0,0,0))
 wordcloud(words = df$word,freq = df$freq, 
           min.freq = 20,max.words=200, random.order=FALSE, 
           rot.per=0.35,colors=brewer.pal(8, "Dark2"),scale=c(3.5,0.25))
-
+dev.off()
