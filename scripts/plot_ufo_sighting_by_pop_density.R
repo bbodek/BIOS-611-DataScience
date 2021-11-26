@@ -1,6 +1,6 @@
 library(ggpmisc)
 library(tidyverse)
-library(ggplot)
+library(ggplot2)
 
 df<-read_csv("./derived_data/sighting_by_pop_density.csv")
 df<-df%>%
