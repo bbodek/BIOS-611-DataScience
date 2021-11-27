@@ -22,5 +22,6 @@ p<-ggplot(df,aes(y=factor(shape,shapes_by_medians),x=duration_seconds,fill=shape
   coord_cartesian(xlim = c(0, 1500)) +
   labs(y="UFO Shape", x="Duration of Sighting (seconds)")+
   theme(legend.position = "none")
-ggsave("figures/shape_duration_boxplot.png",plot=p)
+
+ggsave("figures/shape_duration_boxplot.png",plot=p,width=5,height=3)
 p
