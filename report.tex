@@ -21,7 +21,21 @@
 \date{2021-11-01}
 \maketitle
 
-\section{Introduction}
+\section{Introduction and Data Source}
+\par The National UFO Reporting Center (NUFORC) is a US organization which tracks and investigates UFO sightings. NUFORC maintains an online database of UFO reports, with almost 100,000 reports documented from 1949 to the present day. A CSV and JSON file scraped from the NUFORC public database can be found at https://data.world/timothyrenner/ufo-sightings. For each reported UFO sighting, the dataset documents a summary of the report, geographic information of where the sighting occured (city, state, longitude, latitutde), the datetime of the sighting, the shape of the unidentified object, the duration of the sighting, and the full text of the original report.
+
+\section {Objectives}
+  \par The overarching goal of this project is to uncover and examine trends in UFO sightings over time and geographic areas. More specifically, this analysis attempts to answer the following questions:
+  \begin{enumerate}
+    \item Are certain geographic areas of the US overrepresented in UFO sightings? Are there commonalities between these areas?
+    \item Beyond frequency, what are the differences in characteristics the UFO sightings themselves between different geographic areas?
+  \end{enumerate}
+  
+\section{Methodology and Results}
+\subsection{Initial Data Preperation}
+\par This project downloads data from a source which has already performed some preprocessing. However, several additional steps were taken to ensure data cleanliness and useability. 
+
+
 \begin{figure}
   \centering
   \includegraphics[width=0.75\linewidth]{figures/top_ufo_shapes.png}
