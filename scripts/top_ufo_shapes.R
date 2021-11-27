@@ -12,7 +12,7 @@ n_total <- nrow(ufo_df)
   
 p<-ggplot(ufo_df,aes(x=factor(shape,shapes_in_order))) +
   geom_bar(color="black",fill="#00B8E5") +
-  theme(axis.text.x = element_text(angle = 90,size=9, vjust = 0.5, hjust=1),
+  theme(axis.text.x = element_text(angle = 90,size=10, vjust = 0.5, hjust=1),
         panel.background = element_rect(fill = "white"),
         #panel.grid.major = element_line(colour="black",size=0.1))+
         panel.grid.major = element_blank())+
