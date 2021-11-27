@@ -53,3 +53,6 @@ figures/ufo_sighting_by_population_density.png: derived_data/sighting_by_pop_den
 			
 /figures/pop_density_by_cluster.png: derived_data/clusters.csv derived_data/sighting_by_pop_density scripts/utils.R scripts/pop_density_by_cluster.R
 			Rscript scripts/pop_density_by_cluster.R
+			
+/figures/sightings_by_time.png: derived_data/sighting_by_pop_density.csv scripts/trends_by_time.R
+			Rscript scripts/trends_by_time.R
