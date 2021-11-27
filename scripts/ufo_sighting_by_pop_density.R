@@ -4,7 +4,7 @@ source("scripts/utils.R")
 
 df<-read.csv("./derived_data/nuforc_ufo_clean_data.csv")
 state_df<-read.csv("./source_data/census_est_pop.csv")
-state_area<-data.frame('state'=state.name,'state_abb' = state.abb, 'LandArea' = state.area)
+state_area<-data.frame('state'=state.name,'state_abb' = state.abb, 'LandArea' = state.area, 'Region'=state.region)
 
 # create tidy dataframe of state and population data from census population estimates
 tidy_state <- state_df%>%
@@ -32,6 +32,7 @@ sighting_df<-df%>%
 
 sighting_pop_df<-inner_join(sighting_df,tidy_state,by = c("state" = "state", "year"="year"))%>%
   mutate(sightings_per_100k = 100000*sightings/population)%>%arrange(sightings_per_100k,asc=FALSE)%>%
-  mutate(pop_density= population/LandArea)
+  mutate(pop_density= population/LandArea)%>%
+  select(-region)
 
 write_csv(sighting_pop_df,"./derived_data/sighting_by_pop_density.csv")  
