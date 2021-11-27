@@ -19,5 +19,5 @@ p<-ggplot(ufo_df,aes(x=factor(shape,shapes_in_order))) +
   labs(x="UFO Shape", y="Count of Reports")+
   geom_text(aes(label=paste0(round(..count../n_total,2)*100,"%")),stat="count", vjust=-0.25,size=3)
 
-ggsave("figures/top_ufo_shapes.png",plot=p)
+ggsave("figures/top_ufo_shapes.png",plot=p,width=5,height=4)
 p
