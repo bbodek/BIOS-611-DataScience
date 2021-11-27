@@ -22,7 +22,7 @@
 \maketitle
 
 \section{Introduction and Data Source}
-\par The National UFO Reporting Center (NUFORC) is a US organization which tracks and investigates UFO sightings. NUFORC maintains an online database of UFO reports, with almost 100,000 reports documented from 1949 to the present day. A CSV and JSON file scraped from the NUFORC public database can be found at https://data.world/timothyrenner/ufo-sightings. For each reported UFO sighting, the dataset documents a summary of the report, geographic information of where the sighting occured (city, state, longitude, latitutde), the datetime of the sighting, the shape of the unidentified object, the duration of the sighting, and the full text of the original report.
+  \par The National UFO Reporting Center (NUFORC) is a US organization which tracks and investigates UFO sightings. NUFORC maintains an online database of UFO reports, with almost 100,000 reports documented from 1949 to the present day. A CSV and JSON file scraped from the NUFORC public database can be found at https://data.world/timothyrenner/ufo-sightings. For each reported UFO sighting, the dataset documents a summary of the report, geographic information of where the sighting occured (city, state, longitude, latitutde), the datetime of the sighting, the shape of the unidentified object, the duration of the sighting, and the full text of the original report.
 
 \section {Objectives}
   \par The overarching goal of this project is to uncover and examine trends in UFO sightings over time and geographic areas. More specifically, this analysis attempts to answer the following questions:
@@ -32,16 +32,69 @@
   \end{enumerate}
   
 \section{Methodology and Results}
+
 \subsection{Initial Data Preperation}
-\par This project downloads data from a source which has already performed some preprocessing. However, several additional steps were taken to ensure data cleanliness and useability. 
-
-
-\begin{figure}
+  \par This project downloads data from a source which has already performed some preprocessing. However, several additional steps were taken to ensure data cleanliness and useability. First, processing is performed on the datetime field detailing when the UFO sighting occured to extract the year of occurence. Next, the duration field is processed. This field contains free-form text of the reported duration of the UFO sighting. This text is processed to extract the sighting duration in numeric seconds, hours, and minutes. finally, the UFO shape field is processed to drop uncommon shapes and create a combined "Unknown/Other" category. Further processing for specific analyses will be described later. 
+  
+\subsection{Exploratory Data Analysis}
+\par
+\begin{figure}[ht]
   \centering
-  \includegraphics[width=0.75\linewidth]{figures/top_ufo_shapes.png}
+  \includegraphics[width=0.6\linewidth]{figures/top_ufo_shapes.png}
   \caption{Most commonly reported UFO shapes}
   \label{fig:ufo_shapes}
 \end{figure}
+
+\par A plurality of UFO sighting shapes were categorized as Other/Unknown, followed closely by "light".
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/sightings_by_time.png}
+  \caption{UFO Sightings By Year: 2010-2019}
+  \label{fig:ufo_sightings}
+\end{figure}
+
+\par Overall UFO sightings peaked in 2014, however there was a dramatic increase in sightings from 2018 to 2019. The American West region has the highest number of UFO sightings, even when normalized by population. The American South region has a large number of UFO sightings, however has a significantly lower sightings per population rate than the West. 
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.8\linewidth]{figures/shape_duration_boxplot.png}
+  \caption{Sighting Duration by Described UFO Shape}
+  \label{fig:ufo_shape}
+\end{figure}
+
+\par There is no clear trend in sighting duration by UFO "type". However, UFO sightings describes as "Flashes" have an overall shorter duration, and UFO sightings described as having changing shapes have an overall longer sighting duration. 
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{figures/word_cloud.png}
+  \caption{Wordcloud of UFO Sighting Descriptions}
+  \label{fig:wordcloud}
+\end{figure}
+\par The most common words used to describe the UFO sightings included Light(s), Moving, Bright, and Object. 
+
+\subsection{Trends in UFO Sightings by State}
+\par After initial exploratory data analysis, a deeper analysis was conducted of trends in UFO sightings by state. For this analysis, state level population data from the US census was joined with the UFO sighting dataset.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{figures/plot_ufo_sighting_by_population.png}
+  \caption{UFO Sightings by State Population}
+  \label{fig:sightings_by_pop}
+\end{figure}
+
+\par There is a clear an statistically significant inverse logarithmic relationship between state population and UFO sightings per 100k residents, i.e. states with larger populations have significantly fewer UFO sightings per resident. 
+
+\begin{figure}[!hb]
+  \centering
+  \includegraphics[width=0.6\linewidth]{figures/ufo_sighting_by_population_density.png}
+  \caption{UFO Sightings by State Population Density}
+  \label{fig:sightings_by_pop_density}
+\end{figure}
+
+\par The relationship between state population density (defined as residents per square mile) and UFO sightings is not as clear, but is still highly statistically significant. It is clear that states with the highest rates of UFO sightings have low population density, and states with high population density tend to have lower rates of UFO sightings on average.
+
+\subsection{Trends In UFO descriptions}
 
 
 \end{document}
