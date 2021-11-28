@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{indentfirst}
 \usepackage{amsmath,amssymb}
+\usepackage{float}
 
 \DeclareRobustCommand{\bbone}{\text{\usefont{U}{bbold}{m}{n}}}
 
@@ -65,7 +66,7 @@
 
 \par There is no clear trend in sighting duration by UFO "type". However, UFO sightings describes as "Flashes" have an overall shorter duration, and UFO sightings described as having changing shapes have an overall longer sighting duration. 
 
-\begin{figure}[!ht]
+\begin{figure}
   \centering
   \includegraphics[width=0.6\linewidth]{figures/word_cloud.png}
   \caption{Wordcloud of UFO Sighting Descriptions}
@@ -76,18 +77,18 @@
 \subsection{Trends in UFO Sightings by State}
 \par After initial exploratory data analysis, a deeper analysis was conducted of trends in UFO sightings by state. For this analysis, state level population data from the US census was joined with the UFO sighting dataset.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
   \centering
-  \includegraphics[width=0.6\linewidth]{figures/plot_ufo_sighting_by_population.png}
+  \includegraphics[width=0.5\linewidth]{figures/plot_ufo_sighting_by_population.png}
   \caption{UFO Sightings by State Population}
   \label{fig:sightings_by_pop}
 \end{figure}
 
 \par There is a clear an statistically significant inverse logarithmic relationship between state population and UFO sightings per 100k residents, i.e. states with larger populations have significantly fewer UFO sightings per resident. 
 
-\begin{figure}[!hb]
+\begin{figure}[H]
   \centering
-  \includegraphics[width=0.6\linewidth]{figures/ufo_sighting_by_population_density.png}
+  \includegraphics[width=0.5\linewidth]{figures/ufo_sighting_by_population_density.png}
   \caption{UFO Sightings by State Population Density}
   \label{fig:sightings_by_pop_density}
 \end{figure}
@@ -95,6 +96,44 @@
 \par The relationship between state population density (defined as residents per square mile) and UFO sightings is not as clear, but is still highly statistically significant. It is clear that states with the highest rates of UFO sightings have low population density, and states with high population density tend to have lower rates of UFO sightings on average.
 
 \subsection{Trends In UFO descriptions}
+\par After uncovering state level trends in UFO sightings, further work was done to analyze the freeform text UFO descriptions. TF-IDF, or Term Frequency - Inverse Document Frequency, is a standard way to analyze the relative importance of words to a particular document. The TF (term frequency) statistic is calculated as: $tf(d,f)=\frac{f_{t,d}}{\sum_{t' \in d}f_{t',d}}$, where $f_{t,d}$ is the word count of a particular term in a particular document. 
+\par \noindent The IDF (inverse document frequency) is calculated as: $idf(t,D) = log(\frac{N}{d \in D:t \in D})$.
+\par \noindent Then TF-IDF is defined as $tfidf(t,d,D)=tf(t,d)*idf(t,D)$, and shows the relative importance of a term to a particular document vs other documents. 
+\par A TF-IDF matrix was created where each document was the concatenation of all UFO sighting reports within a state for the year 2019 (for example, a concatenation of all UFO reports in Florida during the year 2019 makes up one of the 50 documents). A distance matrix was then computed using cosine similarity between the TF-IDF vectors for each pair of states as a measure of the similarity between those states. An agglomerative heirarchical clustering methodology was employed on this distance matrix to create a dendogram, a tree based diagram depicting the heirchical relationships between entities,  of similarity between state report texts. Finally, 5 clusters of states were created from the resulting dendogram, as depicted below. 
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{figures/state_dendogram.png}
+  \caption{Dendogram of State UFO Sighting Report Text (with clusters circled)}
+  \label{fig:state_dendogram}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{figures/state_clusters.png}
+  \caption{State Cluters (plotted with PCA)}
+  \label{fig:state_clusters}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{figures/cluster_map.png}
+  \caption{States Colored by Cluster}
+  \label{fig:cluster_map}
+\end{figure}
+
+\par As shown in the above figure, there is some regionality to the state clusters. However, geography alone does not fully explain the clustering behavior. To explain more of the variation between cluster, an analysis was conducted comparing the population density between clusters. There were significant differences in population density between clusters, suggesting that state population density does factor into both frequency of UFO sigthings and the more qualitative descriptions of sightings from the sighting reports. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{figures/pop_density_by_cluster.png}
+  \caption{Boxplot of Population Density by State Cluster}
+  \label{fig:clusteR_pop_density}
+\end{figure}
+
+\section{Further Analysis}
+
+\par While this project attempts to take an initial dive into variation in UFO reports over time and geographical area, much is left for future analyses. A key next step is to further analyze where the differences in report text between states occur - for example do certain key words occur much more frequently in certain areas of the country. 
+\par Additionally, more time series analysis should be conducted to examine trends in seasonality and correlation between scientific and popular culture events and UFO sightings (for ecxample, do popular alien related movie release dates correlated with higher frequency periods of reported UFO sightings). 
 
 \end{document}
