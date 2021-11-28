@@ -12,6 +12,6 @@ RUN apt update && apt-get install -y emacs\
   texlive-latex-extra\
 	python3-pip
 RUN adduser rstudio sudo 
-RUN R -e "install.packages(c('ggpmisc','NbClust','wordcloud','RColorBrewer','factoextra','reticulate','stringr','tidyverse','ggplot2','tm','SnowballC','shiny','leaflet','leaflet.extras','shinyWidgets','ggpubr','tinytex'))"
+RUN R -e "install.packages(c('maps','ggpmisc','NbClust','wordcloud','RColorBrewer','factoextra','reticulate','stringr','tidyverse','ggplot2','tm','SnowballC','shiny','leaflet','leaflet.extras','shinyWidgets','ggpubr','tinytex'))"
 
 
