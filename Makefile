@@ -36,10 +36,10 @@ figures/plot_ufo_sighting_by_population.png: derived_data/sighting_by_pop_densit
 figures/ufo_sighting_by_population_density.png: derived_data/sighting_by_pop_density.csv scripts/plot_ufo_sighting_by_pop_density.R scripts/utils.R
 			Rscript scripts/plot_ufo_sighting_by_pop_density.R
 			
-figures/word_cloud.png: derived_data/nuforc_ufo_clean_data.csv scripts/utils.R scripts/word_cloud.R 
-			Rscript scripts.word_cloud.R
+figures/word_cloud.png: derived_data/nuforc_ufo_clean_data.csv scripts/utils.R scripts/wordcloud.R 
+			Rscript scripts/wordcloud.R
 			
-figures/pop_density_by_cluster.png: derived_data/clusters.csv derived_data/sighting_by_pop_density scripts/utils.R scripts/pop_density_by_cluster.R
+figures/pop_density_by_cluster.png: derived_data/clusters.csv derived_data/sighting_by_pop_density.csv scripts/utils.R scripts/pop_density_by_cluster.R
 			Rscript scripts/pop_density_by_cluster.R
 			
 figures/sightings_by_time.png: derived_data/sighting_by_pop_density.csv scripts/trends_by_time.R
