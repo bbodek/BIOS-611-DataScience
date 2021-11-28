@@ -44,3 +44,7 @@ The Makefile included in this repository will help build major components
  For example, to build a figure displaying a bar chart of the top observed UFO shapes, run the following code in the terminal or Rstudio :
  	
 	make figures/top_ufo_shapes.png
+
+To build the final report (report.pdf) which summarizes results from all analyses conducted, run the following code in the terminal or Rstudio :
+
+	make report.pdf
